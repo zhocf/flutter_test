@@ -12,7 +12,8 @@ class Home extends StatelessWidget {
       ListType(name: '雪花', path: '/snow'),
       ListType(name: '轮播图', path: '/banner'),
       ListType(name: '大图预览', path: '/image_scan'),
-      ListType(name: '列表', path: '/polygon'),
+      ListType(name: '下拉列表', path: '/pull_list'),
+      ListType(name: '图片加载组件', path: "/img")
     ];
 
     void hrefPage(String path) {
