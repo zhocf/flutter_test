@@ -1,5 +1,6 @@
 import 'dart:math';
 
+import 'package:flutte_test/component/img/imgLoading.dart';
 import 'package:flutter/material.dart';
 
 class ImgPreview extends StatefulWidget {
@@ -17,13 +18,19 @@ class _ImgPreviewState extends State<ImgPreview> with SingleTickerProviderStateM
   void initState() {
     super.initState();
     _animatedContainer = AnimationController(
-      duration: const Duration(seconds: 2),
+      duration: const Duration(milliseconds: 300),
       vsync: this,
     );
     _animation = Tween(begin: 0.0, end: 1.0).animate(_animatedContainer);
     _animation.addListener(() {
       setState(() {});
     });
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    _animatedContainer.dispose();
   }
 
   @override
@@ -34,29 +41,19 @@ class _ImgPreviewState extends State<ImgPreview> with SingleTickerProviderStateM
       double parentHeight = constraints.maxHeight;
       double minValue = min(parentHeight, parentWidth);
       return Container(
-        color: Color.fromRGBO(225, 231, 241, 1),
+        width: parentWidth,
         child: Image.network(
-          "https://taolive.top/api/pub_file/1/acg/12bd8028590195554fdad0d981acffda.png?size=1500",
+          "https://taolive.top/api/pub_file/1/acg/90f2d5b604a17b3a915b8af713634335.png",
           fit: BoxFit.cover,
-          loadingBuilder: (BuildContext context, Widget child, ImageChunkEvent? loadingProgress) {
-            if (loadingProgress == null) {
+          frameBuilder: (BuildContext context, Widget child, int? frame, bool wasSynchronouslyLoaded) {
+            if (wasSynchronouslyLoaded || frame != null) {
               _animatedContainer.forward();
               return Opacity(
                 opacity: _animation.value,
                 child: child,
               ); // 图像加载完成，显示原始图像
             } else {
-              return Container(
-                alignment: Alignment.center,
-                color: Color.fromRGBO(225, 231, 241, 1),
-                child: SizedBox(
-                  width: minValue / 3,
-                  height: minValue / 3,
-                  child: CircularProgressIndicator(
-                    value: 0.5,
-                  ),
-                ),
-              );
+              return ImgLoading();
             }
           },
           errorBuilder: (BuildContext context, Object error, StackTrace? stackTrace) {
