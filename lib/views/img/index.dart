@@ -49,6 +49,7 @@ class _ImgPageState extends State<ImgPage> {
             height: 300,
             child: ImgPreview(
               url: "https://taolive.top/api/pub_file/1/acg/90f2d5b604a17b3a915b8af713634335.png",
+              preview: true,
             ),
           ),
           ElevatedButton(onPressed: clear, child: Text("清除缓存"))

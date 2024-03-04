@@ -25,6 +25,7 @@ void main() {
         "/test": (context) => const Demo2Page(),
         "/img":(context) => const ImgPage()
       },
+     navigatorObservers: [],
     ),
   );
 }

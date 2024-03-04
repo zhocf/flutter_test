@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 
-class ImgLoading extends StatefulWidget {
-  const ImgLoading({Key? key}) : super(key: key);
+class ImgLoadingPlaceholder extends StatefulWidget {
+  const ImgLoadingPlaceholder({Key? key}) : super(key: key);
 
   @override
-  State<ImgLoading> createState() => _ImgLoadingState();
+  State<ImgLoadingPlaceholder> createState() => _ImgLoadingPlaceholderState();
 }
 
-class _ImgLoadingState extends State<ImgLoading> with SingleTickerProviderStateMixin {
+class _ImgLoadingPlaceholderState extends State<ImgLoadingPlaceholder> with SingleTickerProviderStateMixin {
   late AnimationController _animationController;
   late Animation<double?> _yAnimation;
   late Animation<double?> _rotateAnimation;
