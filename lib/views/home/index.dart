@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class Home extends StatelessWidget {
   const Home({Key? key}) : super(key: key);
@@ -18,7 +19,7 @@ class Home extends StatelessWidget {
     ];
 
     void hrefPage(String path) {
-      Navigator.pushNamed(context, path);
+      context.push(path);
     }
 
     return Scaffold(

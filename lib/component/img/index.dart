@@ -98,13 +98,7 @@ class _ImgPreviewState extends State<ImgPreview> with SingleTickerProviderStateM
     if (widget.preview == true) {
       bool type = loadingStatus == 1;
       String url = type ? widget.url : _cacheUrl;
-      NavigatorUtils.push(
-        context,
-        ImgPreviewModal(
-          url: url,
-          type: type,
-        ),
-      );
+
     }
   }
 
