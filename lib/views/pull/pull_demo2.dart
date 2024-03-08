@@ -24,47 +24,49 @@ class _PullDemo2State extends State<PullDemo2> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(title: Text("可下拉列表")),
-        body: Container(
-          child: NotificationListener(
-            onNotification: (ScrollNotification notification) {
-              sliverRefreshKey.currentState!.notifyScrollNotification(notification);
-              return false;
-            },
-            child: CustomScrollView(
-              controller: _scrollController,
-              physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
-              slivers: <Widget>[
-                CupertinoSliverRefreshControl(
-                  key: sliverRefreshKey,
-                  refreshIndicatorExtent: 100,
-                  refreshTriggerPullDistance: 140,
-                  onRefresh: onRefresh,
-                  builder: buildSimpleRefreshIndicator,
+      appBar: AppBar(title: Text("可下拉列表2")),
+      body: Container(
+        child: NotificationListener(
+          onNotification: (ScrollNotification notification) {
+            sliverRefreshKey.currentState!.notifyScrollNotification(notification);
+            return false;
+          },
+          child: CustomScrollView(
+            controller: _scrollController,
+            physics: BouncingScrollPhysics(parent: AlwaysScrollableScrollPhysics()),
+            slivers: <Widget>[
+              CupertinoSliverRefreshControl(
+                key: sliverRefreshKey,
+                refreshIndicatorExtent: 100,
+                refreshTriggerPullDistance: 140,
+                onRefresh: onRefresh,
+                builder: buildSimpleRefreshIndicator,
+              ),
+              SliverList(
+                delegate: SliverChildBuilderDelegate(
+                  (context, index) {
+                    return ListTile(
+                      title: Text('Item $index'),
+                    );
+                  },
+                  childCount: 30,
                 ),
-                SliverList(
-                  delegate: SliverChildBuilderDelegate(
-                    (context, index) {
-                      return ListTile(
-                        title: Text('Item $index'),
-                      );
-                    },
-                    childCount: 30,
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ));
+        ),
+      ),
+    );
   }
 }
+
 Widget buildSimpleRefreshIndicator(
-    BuildContext context,
-    RefreshIndicatorMode? refreshState,
-    double pulledExtent,
-    double refreshTriggerPullDistance,
-    double refreshIndicatorExtent,
-    ) {
+  BuildContext context,
+  RefreshIndicatorMode? refreshState,
+  double pulledExtent,
+  double refreshTriggerPullDistance,
+  double refreshIndicatorExtent,
+) {
   const Curve opacityCurve = Interval(0.4, 0.8, curve: Curves.easeInOut);
   return Align(
     alignment: Alignment.bottomCenter,
@@ -72,19 +74,17 @@ Widget buildSimpleRefreshIndicator(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: refreshState != RefreshIndicatorMode.refresh
           ? Opacity(
-        opacity: opacityCurve.transform(
-            min(pulledExtent / refreshTriggerPullDistance, 1.0)),
-        child: const Icon(
-          IOS.CupertinoIcons.down_arrow,
-          color: IOS.CupertinoColors.inactiveGray,
-          size: 36.0,
-        ),
-      )
+              opacity: opacityCurve.transform(min(pulledExtent / refreshTriggerPullDistance, 1.0)),
+              child: const Icon(
+                IOS.CupertinoIcons.down_arrow,
+                color: IOS.CupertinoColors.inactiveGray,
+                size: 36.0,
+              ),
+            )
           : Opacity(
-        opacity: opacityCurve
-            .transform(min(pulledExtent / refreshIndicatorExtent, 1.0)),
-        child: const IOS.CupertinoActivityIndicator(radius: 14.0),
-      ),
+              opacity: opacityCurve.transform(min(pulledExtent / refreshIndicatorExtent, 1.0)),
+              child: const IOS.CupertinoActivityIndicator(radius: 14.0),
+            ),
     ),
   );
 }
